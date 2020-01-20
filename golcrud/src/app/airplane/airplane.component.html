@@ -1,0 +1,27 @@
+<div class="container"> 
+    <mat-card> 
+      <mat-toolbar color="accent"> 
+        <div align="center" style="color:white;text-align: right;"> 
+          Angular 7 - Airplane - CRUD
+        </div>   
+      </mat-toolbar> 
+    <br><br> 
+      <mat-card-content> 
+          
+          <table class="table" > 
+              <tr ngclass="btn-primary"> 
+                <th class="tbl2">Modelo</th> 
+                <th class="tbl2">Quantidade de turbinas</th> 
+                <th class="tbl2">Capacidade Passageiros</th> 
+                <th class="tbl2">Capacidade Cargas</th> 
+              </tr> 
+              <tr *ngFor="let airplane of allAirplane | async"> 
+                <td class="tbl2">{{airplane.Modelo}}</td> 
+                <td class="tbl2">{{airplane.QtdTurbinas}}</td> 
+                <td class="tbl2">{{airplane.CapacPassageiros}}</td> 
+                <td class="tbl2">{{airplane.CapacCarga}} </td> 
+              </tr>    
+            </table>  
+      </mat-card-content> 
+    </mat-card> 
+    </div>

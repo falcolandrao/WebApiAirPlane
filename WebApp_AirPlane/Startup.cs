@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using WebApp_AirPlane.Models;
 
 namespace WebApp_AirPlane
 {
@@ -25,6 +27,19 @@ namespace WebApp_AirPlane
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
+                });
+            });
+
+            services.AddDbContext<AppDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                );
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -40,6 +55,8 @@ namespace WebApp_AirPlane
                 app.UseHsts();
             }
 
+            // Envia uma requisição a partir de aplicação Angular que vai estar em outro domínio.
+            app.UseCors("EnableCORS");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
